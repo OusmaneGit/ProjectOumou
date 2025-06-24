@@ -2,7 +2,7 @@ import React from "react";
 
 function BaseFooter() {
     return (
-        <footer className="pt-lg-8 pt-5 footer bg-dark text-white" style={{ marginTop: "900px" }}>
+        <footer className="pt-lg-8 pt-5 footer bg-dark text-white" style={{ marginTop: "60px" }}>
             <div className="container mt-lg-2">
                 <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 text-white">

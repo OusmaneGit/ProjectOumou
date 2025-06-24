@@ -16,11 +16,11 @@ import apiInstance from "../../utils/axios";
 function Search() {
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [cartCount, setCartCount] = useContext(CartContext);
+    
 
     const country = GetCurrentAddress().country;
     const userId = UserData()?.user_id;
-    const cartId = CartId();
+    
 
     const fetchCourse = async () => {
         setIsLoading(true);
@@ -38,32 +38,7 @@ function Search() {
         fetchCourse();
     }, []);
 
-    const addToCart = async (courseId, userId, price, country, cartId) => {
-        const formdata = new FormData();
-
-        formdata.append("course_id", courseId);
-        formdata.append("user_id", userId);
-        formdata.append("price", price);
-        formdata.append("country_name", country);
-        formdata.append("cart_id", cartId);
-
-        try {
-            await useAxios.post(`course/cart/`, formdata).then((res) => {
-                console.log(res.data);
-                Toast().fire({
-                    title: "Added To Cart",
-                    icon: "success",
-                });
-
-                // Set cart count after adding to cart
-                apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
-                    setCartCount(res.data?.length);
-                });
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    
 
     // Search Feature
     const [searchQuery, setSearchQuery] = useState("");
@@ -153,22 +128,7 @@ function Search() {
                                                     <span className="fs-6 ms-2">({c.reviews?.length} Reviews)</span>
                                                 </div>
                                             </div>
-                                            {/* Card Footer */}
-                                            <div className="card-footer">
-                                                <div className="row align-items-center g-0">
-                                                    <div className="col">
-                                                        <h5 className="mb-0">${c.price}</h5>
-                                                    </div>
-                                                    <div className="col-auto">
-                                                        <button type="button" onClick={() => addToCart(c.id, userId, c.price, country, cartId)} className="text-inherit text-decoration-none btn btn-primary me-2">
-                                                            <i className="fas fa-shopping-cart text-primary text-white" />
-                                                        </button>
-                                                        <Link to={""} className="text-inherit text-decoration-none btn btn-primary">
-                                                            Enroll Now <i className="fas fa-arrow-right text-primary align-middle me-2 text-white" />
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 ))}

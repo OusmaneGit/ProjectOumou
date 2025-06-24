@@ -50,7 +50,6 @@ RATING = (
 )
 
 NOTI_TYPE = (
-  
     ("New Review", "New Review"),
     ("New Course Question", "New Course Question"),
     ("Draft", "Draft"),
