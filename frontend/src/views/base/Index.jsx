@@ -200,7 +200,7 @@ function Index() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                                {currentItems?.map((c, index) => (
+                                {currentItems?.map((c) => (
                                     <div className="col">
                                         {/* Card */}
                                         <div className="card card-hover">

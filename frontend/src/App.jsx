@@ -12,9 +12,9 @@
 //
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
-import { CartContext, ProfileContext } from "./views/plugin/Context";
-import apiInstance from "./utils/axios";
-import CartId from "./views/plugin/CartId";
+import { ProfileContext } from "./views/plugin/Context";
+
+
 
 import MainWrapper from "./layouts/MainWrapper";
 import PrivateRoute from "./layouts/PrivateRoute";
@@ -36,7 +36,7 @@ import StudentCourses from "./views/student/Courses";
 import StudentCourseDetail from "./views/student/CourseDetail";
 import Wishlist from "./views/student/Wishlist";
 import StudentProfile from "./views/student/Profile";
-import useAxios from "./utils/useAxios";
+
 import UserData from "./views/plugin/UserData";
 import StudentChangePassword from "./views/student/ChangePassword";
 import Dashboard from "./views/instructor/Dashboard";

@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CartContext } from "../plugin/Context";
+
 import { useAuthStore } from "../../store/auth";
 
 function BaseHeader() {
@@ -12,7 +12,7 @@ function BaseHeader() {
         navigate(`/search/?search=${searchQuery}`);
     };
 
-    const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
+    const [isLoggedIn] = useAuthStore((state) => [state.isLoggedIn, state.user]);
 
     return (
         <div>
@@ -34,17 +34,7 @@ function BaseHeader() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/pages/contact-us/">
-                                    {" "}
-                                    <i className="fas fa-phone"></i> Contact Us
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/pages/about-us/">
-                                    <i className="fas fa-address-card"></i> About Us
-                                </Link>
-                            </li>
+                           
                             <li className="nav-item dropdown">
                                 <a
                                     className="nav-link dropdown-toggle"
