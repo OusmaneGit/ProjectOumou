@@ -94,12 +94,7 @@ function Dashboard() {
                                         <span className="display-6 lh-1 text-success mb-0">
                                             <i className="fas fa-dollar-sign fa-fw" />
                                         </span>
-                                        <div className="ms-4">
-                                            <div className="d-flex">
-                                                <h5 className="purecounter mb-0 fw-bold">${stats.total_revenue?.toFixed(2)}</h5>
-                                            </div>
-                                            <p className="mb-0 h6 fw-light">Total Revenue</p>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +125,7 @@ function Dashboard() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {courses?.map((c, index) => (
+                                            {courses?.map((c) => (
                                                 <tr>
                                                     <td>
                                                         <div className="d-flex align-items-center">

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import BaseHeader from "../partials/BaseHeader";
 import BaseFooter from "../partials/BaseFooter";
 import { Link } from "react-router-dom";
@@ -6,21 +6,16 @@ import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
 
 import useAxios from "../../utils/useAxios";
-import CartId from "../plugin/CartId";
-import GetCurrentAddress from "../plugin/UserCountry";
-import UserData from "../plugin/UserData";
-import Toast from "../plugin/Toast";
-import { CartContext } from "../plugin/Context";
-import apiInstance from "../../utils/axios";
+
+
+
+
 
 function Search() {
     const [courses, setCourses] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [ setIsLoading] = useState(true);
     
 
-    const country = GetCurrentAddress().country;
-    const userId = UserData()?.user_id;
-    
 
     const fetchCourse = async () => {
         setIsLoading(true);
@@ -80,7 +75,7 @@ function Search() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                                {courses?.map((c, index) => (
+                                {courses?.map((c) => (
                                     <div className="col">
                                         {/* Card */}
                                         <div className="card card-hover">
@@ -162,41 +157,7 @@ function Search() {
                 </div>
             </section>
 
-            <section className="my-8 py-lg-8">
-                {/* container */}
-                <div className="container">
-                    {/* row */}
-                    <div className="row align-items-center bg-primary gx-0 rounded-3 mt-5">
-                        {/* col */}
-                        <div className="col-lg-6 col-12 d-none d-lg-block">
-                            <div className="d-flex justify-content-center pt-4">
-                                {/* img */}
-                                <div className="position-relative">
-                                    <img src="https://desphixs.com/geeks/assets/images/png/cta-instructor-1.png" alt="image" className="img-fluid mt-n8" />
-                                    <div className="ms-n8 position-absolute bottom-0 start-0 mb-6">
-                                        <img src="https://desphixs.com/geeks/assets/images/svg/dollor.svg" alt="dollor" />
-                                    </div>
-                                    {/* img */}
-                                    <div className="me-n4 position-absolute top-0 end-0">
-                                        <img src="https://desphixs.com/geeks/assets/images/svg/graph.svg" alt="graph" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-5 col-12">
-                            <div className="text-white p-5 p-lg-0">
-                                {/* text */}
-                                <h2 className="h1 text-white">Become an instructor today</h2>
-                                <p className="mb-0">Instructors from around the world teach millions of students on Geeks. We provide the tools and skills to teach what you love.</p>
-                                <a href="#" className="btn bg-white text-dark fw-bold mt-4">
-                                    Start Teaching Today <i className="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+           
             <BaseFooter />
         </>
     );

@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import apiInstance from "../../utils/axios";
 import { register } from "../../utils/auth";
 
 import BaseHeader from "../partials/BaseHeader";

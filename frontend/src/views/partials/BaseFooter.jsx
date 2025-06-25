@@ -68,12 +68,7 @@ function BaseFooter() {
                                         Français
                                     </a>
                                 </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        
-                                        Deutsch
-                                    </a>
-                                </li>
+                              
                             </ul>
                         </div>
                     </div>

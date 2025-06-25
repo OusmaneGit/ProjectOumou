@@ -11,7 +11,7 @@ import UserData from "../plugin/UserData";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
-    const [stats, setStats] = useState([]);
+    //const [stats, setStats] = useState([]);
     const [fetching, setFetching] = useState(true);
 
     const fetchData = () => {
@@ -85,7 +85,7 @@ function Courses() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {courses?.map((c, index) => (
+                                                {courses?.map((c) => (
                                                     <tr>
                                                         <td>
                                                             <div className="d-flex align-items-center">

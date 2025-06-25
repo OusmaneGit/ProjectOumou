@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import apiInstance from "../../utils/axios";
+//import apiInstance from "../../utils/axios";
 import { login } from "../../utils/auth";
 import BaseHeader from "../partials/BaseHeader";
 import BaseFooter from "../partials/BaseFooter";

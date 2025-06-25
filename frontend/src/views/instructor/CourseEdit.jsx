@@ -29,7 +29,7 @@ function CourseEdit() {
 
     const handleImageUpload = async (event) => {
         setImagePreview(null);
-        setLoading(true);
+       // setLoading(true);
 
         const file = event.target.files[0];
 
@@ -46,7 +46,7 @@ function CourseEdit() {
             if (response?.data?.url) {
                 setImagePreview(response?.data?.url);
                 console.log(response?.data?.url);
-                setLoading(false);
+               //// setLoading(false);
                 setCourseData({
                     ...courseData,
                     image: response?.data?.url,
@@ -54,12 +54,12 @@ function CourseEdit() {
             }
         } catch (error) {
             console.error("Error uploading image:", error);
-            setLoading(false);
+            //setLoading(false);
         }
     };
 
     const handleFileUpload = async (event) => {
-        setFileLoading(true);
+        //setFileLoading(true);
 
         const file = event.target.files[0];
 
@@ -74,7 +74,7 @@ function CourseEdit() {
             });
 
             if (response?.data?.url) {
-                setFileLoading(false);
+               // setFileLoading(false);
                 setCourseData({
                     ...courseData,
                     file: response?.data?.url,
@@ -82,7 +82,7 @@ function CourseEdit() {
             }
         } catch (error) {
             console.error("Error uploading course intro:", error);
-            setLoading(false);
+            //setLoading(false);
         }
     };
 
@@ -233,12 +233,7 @@ function CourseEdit() {
                                                         description: editor.getData(),
                                                     });
                                                 }}
-                                                onBlur={(event, editor) => {
-                                                    // console.log("Blur.", editor);
-                                                }}
-                                                onFocus={(event, editor) => {
-                                                    // console.log("Focus.", editor);
-                                                }}
+                                              
                                                 config={{
                                                     toolbar: ["bold", "italic", "link", "bulletedList", "numberedList", "blockQuote", "undo", "redo"],
                                                 }}

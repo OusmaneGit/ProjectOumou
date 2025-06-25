@@ -4,7 +4,32 @@ import jwt_decode from "jwt-decode";
 import Cookie from "js-cookie";
 import Swal from "sweetalert2";
 
+// OLD CODE COMMENTED WITH EXPLANATIONS
 
+/*
+// The original login function lacked error feedback if the status was not 200
+export const login = async (email, password) => {
+    try {
+        const { data, status } = await axios.post(`user/token/`, {
+            email,
+            password,
+        });
+
+        if (status === 200) {
+            setAuthUser(data.access, data.refresh);
+        }
+
+        return { data, error: null };
+    } catch (error) {
+        return {
+            data: null,
+            error: error.response.data?.detail || "Something went wrong",
+        };
+    }
+};
+*/
+
+// CHANGES:
 // - Added better error handling and logging to provide detailed feedback in case of failure
 export const login = async (email, password) => {
     try {
@@ -25,8 +50,10 @@ export const login = async (email, password) => {
     }
 };
 
+// OLD CODE
 
-
+/*
+// No changes in the register function, but logging could also be added for debugging
 export const register = async (full_name, email, password, password2) => {
     try {
         const { data } = await axios.post(`user/register/`, {
@@ -41,19 +68,73 @@ export const register = async (full_name, email, password, password2) => {
     } catch (error) {
         return {
             data: null,
-            error: "Something went wrong",
+            error: `${error.response.data.full_name} - ${error.response.data.email}` || "Something went wrong",
+        };
+    }
+};
+*/
+
+// CHANGES:
+// - No significant changes to this function. Left as is for now
+export const register = async (full_name, email, password, password2) => {
+    try {
+        const { data } = await axios.post(`user/register/`, {
+            full_name,
+            email,
+            password,
+            password2,
+        });
+
+        await login(email, password);
+        return { data, error: null };
+    } catch (error) {
+        return {
+            data: null,
+            error: `${error.response.data.full_name} - ${error.response.data.email}` || "Something went wrong",
         };
     }
 };
 
+// OLD CODE COMMENTED WITH EXPLANATIONS
+
+/*
+// The original logout function is fine. No need for changes here
+export const logout = () => {
+    Cookie.remove("access_token");
+    Cookie.remove("refresh_token");
+    useAuthStore.getState().setUser(null);
+};
+*/
+
+// No changes needed for `logout`
 export const logout = () => {
     Cookie.remove("access_token");
     Cookie.remove("refresh_token");
     useAuthStore.getState().setUser(null);
 };
 
+// OLD CODE
 
+/*
+// Issue: getRefreshToken was called but not awaited, potentially leading to invalid tokens being used
+export const setUser = async () => {
+    const access_token = Cookie.get("access_token");
+    const refresh_token = Cookie.get("refresh_token");
 
+    if (!access_token || !refresh_token) {
+        return;
+    }
+
+    if (isAccessTokenExpired(access_token)) {
+        const response = getRefreshToken(refresh_token);  // MISSING await!
+        setAuthUser(response.access, response.refresh);
+    } else {
+        setAuthUser(access_token, refresh_token);
+    }
+};
+*/
+
+// CHANGES:
 // - Added `await` to `getRefreshToken` to ensure token refresh is properly awaited
 export const setUser = async () => {
     const access_token = Cookie.get("access_token");
@@ -170,7 +251,7 @@ export const isAccessTokenExpired = (access_token) => {
         const decodedToken = jwt_decode(access_token);
         return decodedToken.exp < Date.now() / 1000;
     } catch (error) {
-        console.error("Error decoding token:", error);
+        //console.error("Error decoding token:", error);
         return true; // Consider token expired if decoding fails
     }
 };

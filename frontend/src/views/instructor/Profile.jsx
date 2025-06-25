@@ -10,7 +10,7 @@ import Toast from "../plugin/Toast";
 import { ProfileContext } from "../plugin/Context";
 
 function Profile() {
-    const [profile, setProfile] = useContext(ProfileContext);
+    const [, setProfile] = useContext(ProfileContext);
     const [profileData, setProfileData] = useState({
         image: "",
         full_name: "",
