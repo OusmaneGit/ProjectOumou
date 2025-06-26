@@ -1,10 +1,44 @@
+// OLD CODE COMMENTED WITH EXPLANATIONS
 
+/*
+const useAxios = () => {
+    const accessToken = Cookies.get("access_token");
+    const refreshToken = Cookies.get("refresh_token");
+
+    const axiosInstance = axios.create({
+        baseURL: API_BASE_URL,
+        headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    axiosInstance.interceptors.request.use(async (req) => {
+        if (!isAccessTokenExpired(accessToken)) {
+            // Pass the token here
+            return req;
+        }
+
+        console.log(accessToken);
+        console.log(refreshToken);
+
+        const response = await getRefreshedToken(refreshToken);
+        console.log("response.data ====", response?.data);
+        console.log("response.data?.access ====", response?.data?.access);
+
+        setAuthUser(response.data?.access, response.data?.refresh);
+        req.headers.Authorization = `Bearer ${response.data?.access}`;
+        return req;
+    });
+
+    return axiosInstance;
+};
+*/
+
+// CHANGES:
 // - Now handles both `AllowAny` and `IsAuthenticated` endpoints
 // - Doesn't send the Authorization header if the endpoint is public
 // - Checks and refreshes tokens only when necessary for authenticated endpoints
 
 import axios from "axios";
-import { setAuthUser, getRefreshToken, isAccessTokenExpired } from "./auth";
+//import { setAuthUser, getRefreshToken, isAccessTokenExpired } from "../store/auth";
 import Cookie from "js-cookie";
 
 // Create an Axios instance with default settings
@@ -27,21 +61,21 @@ useAxios.interceptors.request.use(
         }
 
         // If the access token is expired, attempt to refresh it
-        if (isAccessTokenExpired(accessToken)) {
-            const refreshToken = Cookie.get("refresh_token"); // Updated for consistency
-            if (refreshToken) {
-                try {
-                    const response = await getRefreshToken(refreshToken);
+        // if (isAccessTokenExpired(accessToken)) {
+        //     const refreshToken = Cookie.get("refresh_token"); // Updated for consistency
+        //     if (refreshToken) {
+        //         try {
+        //             const response = await getRefreshToken(refreshToken);
 
-                    // Update the token cookies and headers
-                    setAuthUser(response.data.access, response.data.refresh);
-                    config.headers.Authorization = `Bearer ${response.data.access}`;
-                } catch (error) {
-                    // Handle refresh token failure (e.g., log out user or show an error message)
-                    console.error("Token refresh failed:", error);
-                }
-            }
-        }
+        //             // Update the token cookies and headers
+        //             setAuthUser(response.data.access, response.data.refresh);
+        //             config.headers.Authorization = `Bearer ${response.data.access}`;
+        //         } catch (error) {
+        //             // Handle refresh token failure (e.g., log out user or show an error message)
+        //             console.error("Token refresh failed:", error);
+        //         }
+        //     }
+        // }
 
         return config;
     },

@@ -9,19 +9,44 @@ import BaseFooter from "../partials/BaseFooter";
 import { Link, useNavigate } from "react-router-dom";
 
 import useAxios from "../../utils/useAxios";
+import UserData from "../plugin/UserData";
 import Swal from "sweetalert2";
+import Cookie from "js-cookie";
 
 function CourseCreate() {
     const [courseData, setCourseData] = useState({ title: "", description: "", image: "", file: "", level: "", language: "", price: "", category: "" });
     const [imagePreview, setImagePreview] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [loadingFile, setFileLoading] = useState(false);
     const [category, setCategory] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Fetch Course Image from Cookie
+        const course_image_url = Cookie.get("course_image_url");
+        const course_intro_url = Cookie.get("course_intro_url");
+
+        if (course_image_url) {
+            setCourseData({
+                ...courseData,
+                image: course_image_url,
+                file: course_intro_url,
+            });
+            setImagePreview(course_image_url);
+        }
+
+        // Fetch Category
         useAxios.get(`course/category/`).then((res) => {
             setCategory(res.data);
         });
     }, []);
+
+    const handleCourseDataChange = (event) => {
+        setCourseData({
+            ...courseData,
+            [event.target.name]: event.target.value,
+        });
+    };
 
     const handleImageUpload = async (event) => {
         setImagePreview(null);
@@ -40,6 +65,7 @@ function CourseCreate() {
             });
 
             if (response?.data?.url) {
+                Cookie.set("course_image_url", response?.data?.url);
                 setImagePreview(response?.data?.url);
                 console.log(response?.data?.url);
                 setLoading(false);
@@ -70,6 +96,7 @@ function CourseCreate() {
             });
 
             if (response?.data?.url) {
+                Cookie.set("course_intro_url", response?.data?.url);
                 setFileLoading(false);
                 setCourseData({
                     ...courseData,

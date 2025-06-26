@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { CartContext } from "../plugin/Context";
 import { useAuthStore } from "../../store/auth";
 
 function BaseHeader() {
-    //const [cartCount, setCartCount] = useContext(CartContext);
+   
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
@@ -12,14 +12,14 @@ function BaseHeader() {
         navigate(`/search/?search=${searchQuery}`);
     };
 
-    const [isLoggedIn] = useAuthStore((state) => [state.isLoggedIn, state.user]);
+    const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
 
     return (
         <div>
             <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
                 <div className="container">
                     <Link className="navbar-brand" to="/">
-                        Certification CDA 
+                        Certiﬁcation CDA
                     </Link>
                     <button
                         className="navbar-toggler"
@@ -34,7 +34,17 @@ function BaseHeader() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                           
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/pages/contact-us/">
+                                    {" "}
+                                    <i className="fas fa-phone"></i> Contact Us
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/pages/about-us/">
+                                    <i className="fas fa-address-card"></i> About Us
+                                </Link>
+                            </li>
                             <li className="nav-item dropdown">
                                 <a
                                     className="nav-link dropdown-toggle"
@@ -88,7 +98,11 @@ function BaseHeader() {
                                             <i className="fas fa-users"></i> Students{" "}
                                         </Link>
                                     </li>
-                                   
+                                    <li>
+                                        <Link className="dropdown-item" to={`/instructor/earning/`}>
+                                            <i className="fas fa-dollar-sign"></i> Earning{" "}
+                                        </Link>
+                                    </li>
 
                                     <li>
                                         <Link className="dropdown-item" to={`/instructor/profile/`}>
@@ -121,7 +135,12 @@ function BaseHeader() {
                                         </Link>
                                     </li>
 
-                                   
+                                    <li>
+                                        <Link className="dropdown-item" to={`/student/wishlist/`}>
+                                            {" "}
+                                            <i className="fas fa-heart"></i> Wishlist{" "}
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link
                                             className="dropdown-item"

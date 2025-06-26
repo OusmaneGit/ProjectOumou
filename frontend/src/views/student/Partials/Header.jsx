@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ProfileContext } from "../../plugin/Context";
 
 function Header() {
-    const [profile] = useContext(ProfileContext);
+    const [profile, setProfile] = useContext(ProfileContext);
 
     return (
         <div className="row align-items-center">

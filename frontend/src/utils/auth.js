@@ -90,7 +90,7 @@ export const register = async (full_name, email, password, password2) => {
     } catch (error) {
         return {
             data: null,
-            error: `${error.response.data.full_name} - ${error.response.data.email}` || "Something went wrong",
+            //error: `${error.response.data.full_name} - ${error.response.data.email}` || "Something went wrong",
         };
     }
 };
@@ -251,7 +251,7 @@ export const isAccessTokenExpired = (access_token) => {
         const decodedToken = jwt_decode(access_token);
         return decodedToken.exp < Date.now() / 1000;
     } catch (error) {
-        //console.error("Error decoding token:", error);
+        console.error("Error decoding token:", error);
         return true; // Consider token expired if decoding fails
     }
 };

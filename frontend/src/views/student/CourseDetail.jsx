@@ -84,7 +84,7 @@ function CourseDetail() {
         formdata.append("course_id", course.course?.id);
         formdata.append("variant_item_id", variantItemId);
 
-        useAxios.post(`student/course-completed/`, formdata).then(() => {
+        useAxios.post(`student/course-completed/`, formdata).then((res) => {
             fetchCourseDetail();
             setMarkAsCompletedStatus({
                 ...markAsCompletedStatus,
@@ -110,7 +110,7 @@ function CourseDetail() {
         formdata.append("note", createNote.note);
 
         try {
-            await useAxios.post(`student/course-note/${UserData()?.user_id}/${param.enrollment_id}/`, formdata).then(() => {
+            await useAxios.post(`student/course-note/${UserData()?.user_id}/${param.enrollment_id}/`, formdata).then((res) => {
                 fetchCourseDetail();
                 handleNoteClose();
                 Toast().fire({
@@ -132,7 +132,7 @@ function CourseDetail() {
         formdata.append("title", createNote.title || selectedNote?.title);
         formdata.append("note", createNote.note || selectedNote?.note);
 
-        useAxios.patch(`student/course-note-detail/${UserData()?.user_id}/${param.enrollment_id}/${noteId}/`, formdata).then(() => {
+        useAxios.patch(`student/course-note-detail/${UserData()?.user_id}/${param.enrollment_id}/${noteId}/`, formdata).then((res) => {
             fetchCourseDetail();
             Toast().fire({
                 icon: "success",
@@ -142,7 +142,7 @@ function CourseDetail() {
     };
 
     const handleDeleteNote = (noteId) => {
-        useAxios.delete(`student/course-note-detail/${UserData()?.user_id}/${param.enrollment_id}/${noteId}/`).then(() => {
+        useAxios.delete(`student/course-note-detail/${UserData()?.user_id}/${param.enrollment_id}/${noteId}/`).then((res) => {
             fetchCourseDetail();
             Toast().fire({
                 icon: "success",
@@ -167,7 +167,7 @@ function CourseDetail() {
         formdata.append("title", createMessage.title);
         formdata.append("message", createMessage.message);
 
-        await useAxios.post(`student/question-answer-list-create/${course.course?.id}/`, formdata).then(() => {
+        await useAxios.post(`student/question-answer-list-create/${course.course?.id}/`, formdata).then((res) => {
             fetchCourseDetail();
             handleQuestionClose();
             Toast().fire({
@@ -329,7 +329,7 @@ function CourseDetail() {
                                                                 </div>
                                                                 {/* Item */}
 
-                                                                {course?.curriculum?.map((c) => (
+                                                                {course?.curriculum?.map((c, index) => (
                                                                     <div className="accordion-item mb-3 p-3 bg-light">
                                                                         <h6 className="accordion-header font-base" id="heading-1">
                                                                             <button
@@ -351,7 +351,7 @@ function CourseDetail() {
                                                                         <div id={`collapse-${c.variant_id}`} className="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
                                                                             <div className="accordion-body mt-3">
                                                                                 {/* Course lecture */}
-                                                                                {c.variant_items?.map((l) => (
+                                                                                {c.variant_items?.map((l, index) => (
                                                                                     <>
                                                                                         <div className="d-flex justify-content-between align-items-center">
                                                                                             <div className="position-relative d-flex align-items-center">
@@ -430,7 +430,7 @@ function CourseDetail() {
                                                                 </div>
                                                                 <div className="card-body p-0 pt-3">
                                                                     {/* Note item start */}
-                                                                    {course?.note?.map((n) => (
+                                                                    {course?.note?.map((n, index) => (
                                                                         <div className="row g-4 p-3">
                                                                             <div className="col-sm-11 col-xl-11 shadow p-3 m-3 rounded">
                                                                                 <h5> {n.title}</h5>
@@ -629,7 +629,7 @@ function CourseDetail() {
                 <Modal.Body>
                     <div className="border p-2 p-sm-4 rounded-3">
                         <ul className="list-unstyled mb-0" style={{ overflowY: "scroll", height: "500px" }}>
-                            {selectedConversation?.messages?.map((m) => (
+                            {selectedConversation?.messages?.map((m, index) => (
                                 <li className="comment-item mb-3">
                                     <div className="d-flex">
                                         <div className="ms-2">

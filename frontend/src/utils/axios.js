@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setAuthUser, getRefreshToken, isAccessTokenExpired } from "./auth";
+//import { setAuthUser, isAccessTokenExpired } from "../store/auth";
 import Cookie from "js-cookie";
 
 // Create an Axios instance with default settings
@@ -22,21 +22,21 @@ apiInstance.interceptors.request.use(
         }
 
         // If the access token is expired, attempt to refresh it
-        if (isAccessTokenExpired(accessToken)) {
-            const refreshToken = Cookie.get("refresh_token"); // Updated for consistency
-            if (refreshToken) {
-                try {
-                    const response = await getRefreshToken(refreshToken);
+        // if (isAccessTokenExpired(accessToken)) {
+        //     const refreshToken = Cookie.get("refresh_token"); // Updated for consistency
+        //     if (refreshToken) {
+        //         try {
+        //             const response = await getRefreshToken(refreshToken);
 
-                    // Update the token cookies and headers
-                    setAuthUser(response.data.access, response.data.refresh);
-                    config.headers.Authorization = `Bearer ${response.data.access}`;
-                } catch (error) {
-                    // Handle refresh token failure (e.g., log out user or show an error message)
-                    console.error("Token refresh failed:", error);
-                }
-            }
-        }
+        //             // Update the token cookies and headers
+        //             setAuthUser(response.data.access, response.data.refresh);
+        //             config.headers.Authorization = `Bearer ${response.data.access}`;
+        //         } catch (error) {
+        //             // Handle refresh token failure (e.g., log out user or show an error message)
+        //             console.error("Token refresh failed:", error);
+        //         }
+        //     }
+        // }
 
         return config;
     },

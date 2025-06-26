@@ -138,7 +138,7 @@ function Dashboard() {
                                                 {courses?.map((c, index) => (
                                                     <tr>
                                                         <td>
-                                                            <div className="d-flex align-items-center">
+                                                            <div className="d-flex align-items-center" key={index}>
                                                                 <div>
                                                                     <a href="#">
                                                                         <img

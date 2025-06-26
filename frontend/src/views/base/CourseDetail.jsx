@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -7,19 +7,23 @@ import BaseHeader from "../partials/BaseHeader";
 import BaseFooter from "../partials/BaseFooter";
 import { useParams } from "react-router-dom";
 import useAxios from "../../utils/useAxios";
-
-
-
+import CartId from "../plugin/CartId";
+import GetCurrentAddress from "../plugin/UserCountry";
+import UserData from "../plugin/UserData";
+import Toast from "../plugin/Toast";
+import { CartContext } from "../plugin/Context";
+import apiInstance from "../../utils/axios";
 
 function CourseDetail() {
     const [course, setCourse] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-  
-    
+    const [addToCartBtn, setAddToCartBtn] = useState("Add To Cart");
+    const [cartCount, setCartCount] = useContext(CartContext);
 
     const param = useParams();
 
-   
+    const country = GetCurrentAddress().country;
+    const userId = UserData()?.user_id || 0;
 
     const fetchCourse = async () => {
         await useAxios.get(`course/course-detail/${param.slug}/`).then((res) => {
@@ -32,7 +36,35 @@ function CourseDetail() {
         fetchCourse();
     }, []);
 
-    
+    const addToCart = async (courseId, userId, price, country, cartId) => {
+        setAddToCartBtn("Adding To Cart");
+        const formdata = new FormData();
+
+        formdata.append("course_id", courseId);
+        formdata.append("user_id", userId);
+        formdata.append("price", price);
+        formdata.append("country_name", country);
+        formdata.append("cart_id", cartId);
+
+        try {
+            await useAxios.post(`course/cart/`, formdata).then((res) => {
+                console.log(res.data);
+                setAddToCartBtn("Added To Cart");
+                Toast().fire({
+                    title: "Added To Cart",
+                    icon: "success",
+                });
+
+                // Set cart count after adding to cart
+                apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+                    setCartCount(res.data?.length);
+                });
+            });
+        } catch (error) {
+            console.log(error);
+            setAddToCartBtn("Add To Cart");
+        }
+    };
 
     return (
         <>
@@ -155,7 +187,7 @@ function CourseDetail() {
                                                         {/* Course accordion START */}
                                                         <div className="accordion accordion-icon accordion-bg-light" id="accordionExample2">
                                                             {/* Item */}
-                                                            {course?.curriculum?.map((c) => (
+                                                            {course?.curriculum?.map((c, index) => (
                                                                 <div className="accordion-item mb-3">
                                                                     <h6 className="accordion-header font-base" id="heading-1">
                                                                         <button
@@ -172,7 +204,7 @@ function CourseDetail() {
                                                                     <div id={`collapse-${c.variant_id}`} className="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
                                                                         <div className="accordion-body mt-3">
                                                                             {/* Course lecture */}
-                                                                            {c.variant_items?.map((l) => (
+                                                                            {c.variant_items?.map((l, index) => (
                                                                                 <>
                                                                                     <div className="d-flex justify-content-between align-items-center">
                                                                                         <div className="position-relative d-flex align-items-center">
@@ -243,7 +275,7 @@ function CourseDetail() {
                                                         </div>
 
                                                         <div className="row">
-                                                            {course?.reviews?.map((r) => (
+                                                            {course?.reviews?.map((r, index) => (
                                                                 <>
                                                                     <div className="d-md-flex my-4">
                                                                         <div className="avatar avatar-xl me-4 flex-shrink-0"></div>
@@ -428,7 +460,203 @@ function CourseDetail() {
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                               
+                                                                {/* Chat Detail Page */}
+                                                                <div className="border p-2 p-sm-4 rounded-3">
+                                                                    <ul
+                                                                        className="list-unstyled mb-0"
+                                                                        style={{
+                                                                            overflowY: "scroll",
+                                                                            height: "500px",
+                                                                        }}
+                                                                    >
+                                                                        <li className="comment-item mb-3">
+                                                                            <div className="d-flex">
+                                                                                <div className="avatar avatar-sm flex-shrink-0">
+                                                                                    <a href="#">
+                                                                                        <img
+                                                                                            className="avatar-img rounded-circle"
+                                                                                            src="https://desphixs.com/geeks/assets/images/avatar/avatar-3.jpg"
+                                                                                            style={{
+                                                                                                width: "40px",
+                                                                                                height: "40px",
+                                                                                                borderRadius: "50%",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            alt="womans image"
+                                                                                        />
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div className="ms-2">
+                                                                                    {/* Comment by */}
+                                                                                    <div className="bg-light p-3 rounded w-100">
+                                                                                        <div className="d-flex w-100 justify-content-center">
+                                                                                            <div className="me-2 ">
+                                                                                                <h6 className="mb-1 lead fw-bold">
+                                                                                                    <a href="#!" className="text-decoration-none text-dark">
+                                                                                                        {" "}
+                                                                                                        Louis Ferguson{" "}
+                                                                                                    </a>
+                                                                                                    <br />
+                                                                                                    <span
+                                                                                                        style={{
+                                                                                                            fontSize: "12px",
+                                                                                                            color: "gray",
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        5hrs Ago
+                                                                                                    </span>
+                                                                                                </h6>
+                                                                                                <p className="mb-0 mt-3  ">Removed demands expense account</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+
+                                                                        <li className="comment-item mb-3">
+                                                                            <div className="d-flex">
+                                                                                <div className="avatar avatar-sm flex-shrink-0">
+                                                                                    <a href="#">
+                                                                                        <img
+                                                                                            className="avatar-img rounded-circle"
+                                                                                            src="https://desphixs.com/geeks/assets/images/avatar/avatar-3.jpg"
+                                                                                            style={{
+                                                                                                width: "40px",
+                                                                                                height: "40px",
+                                                                                                borderRadius: "50%",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            alt="womans image"
+                                                                                        />
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div className="ms-2">
+                                                                                    {/* Comment by */}
+                                                                                    <div className="bg-light p-3 rounded w-100">
+                                                                                        <div className="d-flex w-100 justify-content-center">
+                                                                                            <div className="me-2 ">
+                                                                                                <h6 className="mb-1 lead fw-bold">
+                                                                                                    <a href="#!" className="text-decoration-none text-dark">
+                                                                                                        {" "}
+                                                                                                        Louis Ferguson{" "}
+                                                                                                    </a>
+                                                                                                    <br />
+                                                                                                    <span
+                                                                                                        style={{
+                                                                                                            fontSize: "12px",
+                                                                                                            color: "gray",
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        5hrs Ago
+                                                                                                    </span>
+                                                                                                </h6>
+                                                                                                <p className="mb-0 mt-3  ">Removed demands expense account from the debby building in a hall town tak with</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+
+                                                                        <li className="comment-item mb-3">
+                                                                            <div className="d-flex">
+                                                                                <div className="avatar avatar-sm flex-shrink-0">
+                                                                                    <a href="#">
+                                                                                        <img
+                                                                                            className="avatar-img rounded-circle"
+                                                                                            src="https://desphixs.com/geeks/assets/images/avatar/avatar-3.jpg"
+                                                                                            style={{
+                                                                                                width: "40px",
+                                                                                                height: "40px",
+                                                                                                borderRadius: "50%",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            alt="womans image"
+                                                                                        />
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div className="ms-2">
+                                                                                    {/* Comment by */}
+                                                                                    <div className="bg-light p-3 rounded w-100">
+                                                                                        <div className="d-flex w-100 justify-content-center">
+                                                                                            <div className="me-2 ">
+                                                                                                <h6 className="mb-1 lead fw-bold">
+                                                                                                    <a href="#!" className="text-decoration-none text-dark">
+                                                                                                        {" "}
+                                                                                                        Louis Ferguson{" "}
+                                                                                                    </a>
+                                                                                                    <br />
+                                                                                                    <span
+                                                                                                        style={{
+                                                                                                            fontSize: "12px",
+                                                                                                            color: "gray",
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        5hrs Ago
+                                                                                                    </span>
+                                                                                                </h6>
+                                                                                                <p className="mb-0 mt-3  ">Removed demands expense account</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+
+                                                                        <li className="comment-item mb-3">
+                                                                            <div className="d-flex">
+                                                                                <div className="avatar avatar-sm flex-shrink-0">
+                                                                                    <a href="#">
+                                                                                        <img
+                                                                                            className="avatar-img rounded-circle"
+                                                                                            src="https://desphixs.com/geeks/assets/images/avatar/avatar-3.jpg"
+                                                                                            style={{
+                                                                                                width: "40px",
+                                                                                                height: "40px",
+                                                                                                borderRadius: "50%",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            alt="womans image"
+                                                                                        />
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div className="ms-2">
+                                                                                    {/* Comment by */}
+                                                                                    <div className="bg-light p-3 rounded w-100">
+                                                                                        <div className="d-flex w-100 justify-content-center">
+                                                                                            <div className="me-2 ">
+                                                                                                <h6 className="mb-1 lead fw-bold">
+                                                                                                    <a href="#!" className="text-decoration-none text-dark">
+                                                                                                        {" "}
+                                                                                                        Louis Ferguson{" "}
+                                                                                                    </a>
+                                                                                                    <br />
+                                                                                                    <span
+                                                                                                        style={{
+                                                                                                            fontSize: "12px",
+                                                                                                            color: "gray",
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        5hrs Ago
+                                                                                                    </span>
+                                                                                                </h6>
+                                                                                                <p className="mb-0 mt-3  ">Removed demands expense account</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <form class="w-100 d-flex">
+                                                                        <textarea class="one form-control pe-4 bg-light w-75" id="autoheighttextarea" rows="1" placeholder="Write a message..."></textarea>
+                                                                        <button class="btn btn-primary ms-2 mb-0 w-25" type="button">
+                                                                            Post <i className="fas fa-paper-plane"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -481,7 +709,72 @@ function CourseDetail() {
                                                             </div>
                                                         )}
                                                     </div>
-                                                   
+                                                    {/* Card body */}
+                                                    <div className="card-body px-3">
+                                                        {/* Info */}
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            {/* Price and time */}
+                                                            <div>
+                                                                <div className="d-flex align-items-center">
+                                                                    <h3 className="fw-bold mb-0 me-2">${course.price}</h3>
+                                                                </div>
+                                                            </div>
+                                                            {/* Share button with dropdown */}
+                                                            <div className="dropdown">
+                                                                {/* Share button */}
+                                                                <a href="#" className="btn btn-sm btn-light rounded small" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <i className="fas fa-fw fa-share-alt" />
+                                                                </a>
+                                                                {/* dropdown button */}
+                                                                <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <i className="fab fa-twitter-square me-2" />
+                                                                            Twitter
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <i className="fab fa-facebook-square me-2" />
+                                                                            Facebook
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <i className="fab fa-linkedin me-2" />
+                                                                            LinkedIn
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <i className="fas fa-copy me-2" />
+                                                                            Copy link
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        {/* Buttons */}
+                                                        <div className="mt-3 d-sm-flex justify-content-sm-between ">
+                                                            {addToCartBtn === "Add To Cart" && (
+                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course?.id, userId, course.price, country, CartId())}>
+                                                                    <i className="fas fa-shopping-cart"></i> Add To Cart
+                                                                </button>
+                                                            )}
+
+                                                            {addToCartBtn === "Added To Cart" && (
+                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course.id, 1, course.price, "Nigeria", "8325347")}>
+                                                                    <i className="fas fa-check-circle"></i> Added To Cart
+                                                                </button>
+                                                            )}
+
+                                                            {addToCartBtn === "Adding To Cart" && (
+                                                                <button type="button" className="btn btn-primary mb-0 w-100 me-2 mt-3" onClick={() => addToCart(course.id, 1, course.price, "Nigeria", "8325347")}>
+                                                                    <i className="fas fa-spinner fa-spin"></i> Adding To Cart
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 {/* Video END */}
                                                 {/* Course info START */}

@@ -10,7 +10,6 @@ import Toast from "../plugin/Toast";
 import { ProfileContext } from "../plugin/Context";
 
 function Profile() {
-    // eslint-disable-next-line no-unused-vars
     const [profile, setProfile] = useContext(ProfileContext);
     const [profileData, setProfileData] = useState({
         image: "",

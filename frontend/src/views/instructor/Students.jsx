@@ -43,12 +43,12 @@ function Students() {
                             </div>
                             {/* Tab content */}
                             <div className="row">
-                                {student?.map((s) => (
+                                {student?.map((s, index) => (
                                     <div className="col-lg-4 col-md-6 col-12">
                                         <div className="card mb-4">
                                             <div className="card-body">
                                                 <div className="text-center">
-                                                    {/* <img
+                                                    <img
                                                         src={`http://127.0.0.1:8000${s.image}`}
                                                         className="rounded-circle avatar-xl mb-3"
                                                         style={{
@@ -58,7 +58,7 @@ function Students() {
                                                             objectFit: "cover",
                                                         }}
                                                         alt="avatar"
-                                                    /> */}
+                                                    />
                                                     <h4 className="mb-1">{s.full_name}</h4>
                                                     <p className="mb-0">
                                                         {" "}

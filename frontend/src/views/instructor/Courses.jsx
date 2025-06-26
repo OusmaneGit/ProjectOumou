@@ -81,7 +81,7 @@ function Courses() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {courses?.map((c) => (
+                                            {courses?.map((c, index) => (
                                                 <tr>
                                                     <td>
                                                         <div className="d-flex align-items-center">
