@@ -21,22 +21,7 @@ apiInstance.interceptors.request.use(
             config.headers.Authorization = `Bearer ${accessToken}`;
         }
 
-        // If the access token is expired, attempt to refresh it
-        // if (isAccessTokenExpired(accessToken)) {
-        //     const refreshToken = Cookie.get("refresh_token"); // Updated for consistency
-        //     if (refreshToken) {
-        //         try {
-        //             const response = await getRefreshToken(refreshToken);
-
-        //             // Update the token cookies and headers
-        //             setAuthUser(response.data.access, response.data.refresh);
-        //             config.headers.Authorization = `Bearer ${response.data.access}`;
-        //         } catch (error) {
-        //             // Handle refresh token failure (e.g., log out user or show an error message)
-        //             console.error("Token refresh failed:", error);
-        //         }
-        //     }
-        // }
+       
 
         return config;
     },

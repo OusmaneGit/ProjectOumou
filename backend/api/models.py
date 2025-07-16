@@ -26,11 +26,6 @@ TEACHER_STATUS = (
     ("Published", "Published"),
 )
 
-PAYMENT_STATUS = (
-    ("Paid", "Paid"),
-    ("Processing", "Processing"),
-    ("Failed", "Failed"),
-)
 
 
 PLATFORM_STATUS = (

@@ -34,17 +34,7 @@ function BaseHeader() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/pages/contact-us/">
-                                    {" "}
-                                    <i className="fas fa-phone"></i> Contact Us
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/pages/about-us/">
-                                    <i className="fas fa-address-card"></i> About Us
-                                </Link>
-                            </li>
+                           
                             <li className="nav-item dropdown">
                                 <a
                                     className="nav-link dropdown-toggle"
@@ -82,14 +72,7 @@ function BaseHeader() {
                                             <i className="fas fa-star"></i> Reviews{" "}
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link
-                                            className="dropdown-item"
-                                            to={`/instructor/question-answer/`}
-                                        >
-                                            <i className="fas fa-envelope"></i> Q/A{" "}
-                                        </Link>
-                                    </li>
+                                    
                                     <li>
                                         <Link
                                             className="dropdown-item"
@@ -98,11 +81,7 @@ function BaseHeader() {
                                             <i className="fas fa-users"></i> Students{" "}
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link className="dropdown-item" to={`/instructor/earning/`}>
-                                            <i className="fas fa-dollar-sign"></i> Earning{" "}
-                                        </Link>
-                                    </li>
+                                   
 
                                     <li>
                                         <Link className="dropdown-item" to={`/instructor/profile/`}>
@@ -135,21 +114,8 @@ function BaseHeader() {
                                         </Link>
                                     </li>
 
-                                    <li>
-                                        <Link className="dropdown-item" to={`/student/wishlist/`}>
-                                            {" "}
-                                            <i className="fas fa-heart"></i> Wishlist{" "}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="dropdown-item"
-                                            to={`/student/question-answer/`}
-                                        >
-                                            {" "}
-                                            <i className="fas fa-envelope"></i> Q/A{" "}
-                                        </Link>
-                                    </li>
+                                    
+                                   
                                     <li>
                                         <Link className="dropdown-item" to={`/student/profile/`}>
                                             {" "}

@@ -55,17 +55,9 @@ function Sidebar() {
                   <i className="fas fa-graduation-cap me-2"></i>Students
                 </Link>
               </li>
+             
               <li className="nav-item">
-                <Link className="nav-link " to={`/instructor/earning/`}>
-                  {" "}
-                  <i className="fas fa-dollar-sign me-2"></i>Earning
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link " to={`/instructor/coupon/`}>
-                  {" "}
-                  <i className="fas fa-tag me-2"></i>Coupons
-                </Link>
+              
                 <li className="nav-item">
                   <Link className="nav-link " to={`/instructor/notifications/`}>
                     {" "}
@@ -73,12 +65,7 @@ function Sidebar() {
                   </Link>
                 </li>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={`/instructor/orders/`}>
-                  {" "}
-                  <i className="fas fa-shopping-cart me-2"></i> Orders{" "}
-                </Link>
-              </li>
+             
               <li className="nav-item">
                 <Link className="nav-link" to={`/instructor/question-answer/`}>
                   {" "}

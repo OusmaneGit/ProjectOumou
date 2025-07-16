@@ -31,34 +31,7 @@ function Wishlist() {
         fetchWishlist();
     }, []);
 
-    const addToCart = async (courseId, userId, price, country, cartId) => {
-        const formdata = new FormData();
-
-        formdata.append("course_id", courseId);
-        formdata.append("user_id", userId);
-        formdata.append("price", price);
-        formdata.append("country_name", country);
-        formdata.append("cart_id", cartId);
-
-        try {
-            await useAxios.post(`course/cart/`, formdata).then((res) => {
-                console.log(res.data);
-                Toast().fire({
-                    title: "Added To Cart",
-                    icon: "success",
-                });
-
-                // Set cart count after adding to cart
-                useAxios
-                    .get(`course/cart-list/${CartId()}/`)
-                    .then((res) => {
-                        setCartCount(res.data?.length);
-                    });
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    
 
     const addToWishlist = (courseId) => {
         const formdata = new FormData();

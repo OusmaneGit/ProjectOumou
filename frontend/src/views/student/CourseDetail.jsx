@@ -664,24 +664,7 @@ function CourseDetail() {
                             </button>
                         </form>
 
-                        {/* <form class="w-100">
-              <input
-                name="title"
-                type="text"
-                className="form-control mb-2"
-                placeholder="Question Title"
-              />
-              <textarea
-                name="message"
-                class="one form-control pe-4 mb-2 bg-light"
-                id="autoheighttextarea"
-                rows="5"
-                placeholder="What's your question?"
-              ></textarea>
-              <button class="btn btn-primary mb-0 w-25" type="button">
-                Post <i className="fas fa-paper-plane"></i>
-              </button>
-            </form> */}
+                       
                     </div>
                 </Modal.Body>
             </Modal>

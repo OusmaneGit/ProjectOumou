@@ -88,20 +88,7 @@ function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
-                                {/* Counter item */}
-                                <div className="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                                    <div className="d-flex justify-content-center align-items-center p-4 bg-success bg-opacity-10 rounded-3">
-                                        <span className="display-6 lh-1 text-success mb-0">
-                                            <i className="fas fa-dollar-sign fa-fw" />
-                                        </span>
-                                        <div className="ms-4">
-                                            <div className="d-flex">
-                                                <h5 className="purecounter mb-0 fw-bold">${stats.total_revenue?.toFixed(2)}</h5>
-                                            </div>
-                                            <p className="mb-0 h6 fw-light">Total Revenue</p>
-                                        </div>
-                                    </div>
-                                </div>
+                               
                             </div>
 
                             <div className="card mb-4">

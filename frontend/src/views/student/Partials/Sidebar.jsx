@@ -18,9 +18,7 @@ function Sidebar() {
                             <li className="nav-item">
                                 <Link className="nav-link" to={`/student/courses/`}> <i className='fas fa-shopping-cart'></i>My Courses</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={`/student/wishlist/`}>  <i className='fas fa-heart'></i> Wishlist </Link>
-                            </li>
+                            
                         </ul>
 
                         {/* Navbar header */}
