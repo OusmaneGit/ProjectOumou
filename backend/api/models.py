@@ -27,7 +27,6 @@ TEACHER_STATUS = (
 )
 
 
-
 PLATFORM_STATUS = (
     ("Review", "Review"),
     ("Disabled", "Disabled"),
